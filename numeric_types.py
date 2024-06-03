@@ -1,28 +1,30 @@
 
 import random
-
+from typing import Optional, Tuple
 guess_number_prompt: str = "Please enter a number between 1 and 100: "
 
-def setup_game() -> int:
-        random_number: int = random.randint(1, 100)
-        name: str = input("What is your name? ")
-        print(f"Hello, {name}! I'm thinking of a number between 1 and 100.")
-        return random_number
+def setup_game() -> Tuple[int, int]:
+    random_number: int = random.randint(1, 100)
+    random_base: int = random.randint(2,16)
+    name: str = input("What is your name? ")
+    print(f"Hello, {name}! I'm thinking of a number between 1 and 100. Enter the number in base {random_base}.")
+    return random_number, random_base
+    
         
-def start_game(random_number: int, max_tries=None) -> None:
+def start_game(random_number: int, random_base: int, max_tries: Optional[int] = None ) -> None:
     attempts: int = 1
-    user_input: int = int(input(guess_number_prompt))
-    user_input: int = play_game(random_number, max_tries, attempts, user_input)
+    user_input: int = int(input(guess_number_prompt), base=random_base)
+    user_input: int = play_game(random_number, max_tries, attempts, user_input, random_base=random_base)
     determine_if_player_won(user_input, random_number, attempts)
 
-def play_game(random_number, max_tries, attempts, user_input)-> int:
+def play_game(random_number:int , max_tries: int , attempts: int, user_input: int, random_base:int)-> int:
     while user_input != random_number and is_under_max_tries(max_tries, attempts):
         evaluate_guess(random_number, user_input)
-        user_input: int = int(input(guess_number_prompt))
+        user_input: int = int(input(guess_number_prompt), random_base=random_base)
         attempts += 1
     return user_input
 
-def evaluate_guess(random_number, user_input):
+def evaluate_guess(random_number: int, user_input: int) -> None:
     if user_input > random_number:
         print("Too high")
     else:
@@ -42,8 +44,10 @@ def is_under_max_tries(max_tries: int, attempts: int) -> bool:
     
     
 def main() -> None:
-    random_number: int = setup_game()
-    start_game(random_number, 3) 
+    random_number: int
+    random_base: int  
+    random_number, random_base, = setup_game()
+    start_game(random_number, random_base, 3) 
     
 
 
