@@ -5,6 +5,11 @@ class NumericGame(GenericGame):
         super().__init__(guess_prompt, setup_prompt, msg_to_high, msg_to_low, user_input_type)
         self.random_base: int = random.randint(2,16)
     
+    
+    @property
+    def setup_prompt(self):
+        return self._setup_prompt.format('{name}', self.random_base)
+    
     def get_random_value(self) -> int:
         return random.randint(1, 100)
     

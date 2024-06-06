@@ -5,7 +5,7 @@ from typing import Optional, Tuple
 class GenericGame(ABC):
     def __init__(self, guess_prompt, setup_prompt, msg_to_high, msg_to_low, user_input_type) -> None:
         self.guess_prompt: str = guess_prompt
-        self.setup_prompt: str = setup_prompt
+        self._setup_prompt: str = setup_prompt
         self.msg_to_high:str  =  msg_to_high
         self.msg_to_low :str = msg_to_low
         self.user_input_type: type = user_input_type
@@ -18,10 +18,14 @@ class GenericGame(ABC):
     def get_user_guess(self):
         pass
     
+    @property
+    def setup_prompt(self):
+        return self._setup_prompt
+    
     def setup_game(self):
         random_value = self.get_random_value()
         name: str = input("What is your name?")
-        print(self.setup_prompt.format(name, self.random_base))
+        print(self.setup_prompt.format(name=name))
         return random_value
     
     def is_under_max_tries(self, max_tries: int, attempts: int) -> bool:
