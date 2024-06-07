@@ -22,7 +22,6 @@ class NumericGame(GenericGame):
     
 def main() -> None:
     numeric_game = NumericGame(numeric_game_config)
-    numeric_game.random_base = 10
     random_number: int = numeric_game.setup_game()
     numeric_game.start_game(random_number,  3) 
     
