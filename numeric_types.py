@@ -1,8 +1,10 @@
 import random
 from generic_game import GenericGame
+from game_config import GameConfig, numeric_game_config
+
 class NumericGame(GenericGame):
-    def __init__(self, guess_prompt, setup_prompt, msg_to_high, msg_to_low, user_input_type) -> None:
-        super().__init__(guess_prompt, setup_prompt, msg_to_high, msg_to_low, user_input_type)
+    def __init__(self, game_config: GameConfig) -> None:
+        super().__init__(game_config)
         self.random_base: int = random.randint(2,16)
     
     
@@ -19,12 +21,7 @@ class NumericGame(GenericGame):
     
     
 def main() -> None:
-    numeric_game = NumericGame(
-        guess_prompt="Please enter a number between 1 and 100: ",
-        setup_prompt="Hello, {}! I'm thinking of a number between 1 and 100. Enter the number in base {}.",
-        msg_to_high="Too high",
-        msg_to_low="Too low",
-        user_input_type=int)
+    numeric_game = NumericGame(numeric_game_config)
     numeric_game.random_base = 10
     random_number: int = numeric_game.setup_game()
     numeric_game.start_game(random_number,  3) 

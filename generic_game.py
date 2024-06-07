@@ -1,14 +1,15 @@
 from abc import ABC, abstractmethod
 import random
 from typing import Optional, Tuple
+from game_config import GameConfig
 
 class GenericGame(ABC):
-    def __init__(self, guess_prompt, setup_prompt, msg_to_high, msg_to_low, user_input_type) -> None:
-        self.guess_prompt: str = guess_prompt
-        self._setup_prompt: str = setup_prompt
-        self.msg_to_high:str  =  msg_to_high
-        self.msg_to_low :str = msg_to_low
-        self.user_input_type: type = user_input_type
+    def __init__(self, game_config: GameConfig) -> None:
+        self.guess_prompt: str = game_config.guess_prompt
+        self._setup_prompt: str = game_config.setup_prompt
+        self.msg_to_high:str  =  game_config.msg_to_high
+        self.msg_to_low :str = game_config.msg_to_low
+        self.user_input_type: type = game_config.user_input_type
     
     @abstractmethod
     def get_random_value(self):
